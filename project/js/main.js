@@ -1,4 +1,4 @@
-console.log("Welcome!");
+console.log("Welcome to Interactive Visuals 101!");
 
 var startProcessing = function(p5) {
   
