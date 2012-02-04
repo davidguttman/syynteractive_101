@@ -86,6 +86,9 @@ I'm in the mood for a dark grey, almost black:
 
 Great, now we know how to set up our canvas the way we want. Let's actually draw something.
 
+
+### Drawing a Rectangle ###
+
 Ok, I know it's not the most exciting thing in the world, but let's start with a rectangle.
 
 <code>rect</code> takes four arguments, x, y, width, and height:
@@ -94,7 +97,37 @@ Ok, I know it's not the most exciting thing in the world, but let's start with a
 
 <code>x</code> is the number of pixels from the left edge of the canvas, and <code>y</code> is the number of pixels from the top edge. <code>width</code> and <code>height</code> will determine the shape and size of your rectangle.
 
+If we want to draw a rectangle 200px from the top and 200px from the left, and we want it to be 100px by 100px:
 
+    p5.rect(200, 200, 100, 100);
+
+Success!
+
+
+### Fill and Stroke ###
+
+Ok, I get it, you like rectangles, but for some reason the idea of only being able to draw white rectangles bothers you.
+
+Here's how we can use color in Processing.
+
+Processing has two methods, <code>fill</code> and <code>stroke</code> that can be used to set the color for points, lines, and shapes. Each of these methods take four arguments, red, green, blue, and alpha:
+  
+    fill(red, green, blue, alpha);
+    stroke(red, green, blue, alpha);
+
+This behaves exactly like <code>background</code> above, except that we can also affect the transparency (which ranges from 0, completely transparent, to 255, completely opaque. 
+
+If I wanted a semi-transparent blue fill with an opaque white border I might do something like this:
+
+    p5.fill(200, 20, 20, 100);
+    p5.stroke(255, 255, 255, 127);
+
+    p5.rect(200, 200, 100, 100);
+
+
+Each of these methods will set a color for all fills and all strokes that follow.
+
+In other words, Processing can only have one magic marker in its hand at one time, but you can switch it out at any point.
 
 
 
