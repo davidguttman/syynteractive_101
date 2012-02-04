@@ -42,19 +42,19 @@ Let's work with <code>setup</code> for right now.
 
 ---
 
-First things first. This canvas is too small and nobody likes that color grey.
-
-Any time we want to use one of Processing's awesome methods, we will preface it by the internal name we give to our Processing instance. In this case we (I) chose <code>p5</code>.
+First things first. This canvas is too small and nobody likes that shade of grey.
 
 ### Canvas Size ###
 
 We want to change the size of the canvas. Will it surprise you that processing's method of doing this is by using a function named <code>size</code>?
 
-<code>size</code> takes two arguments, width and height, and is called like so:
+<code>size</code> takes two arguments, width and height, like so:
 
     size(width, height);
 
-or in our case if we wanted to change both the width and height to 400:
+However, any time we want to use one of Processing's awesome methods, we will preface it by the internal name we give to our Processing instance. In this case we (I) chose <code>p5</code>.
+
+If we wanted to change both the width and height to 400:
 
     p5.size(400, 400);
 
@@ -103,6 +103,32 @@ If we want to draw a rectangle 200px from the top and 200px from the left, and w
 
 Success!
 
+#### Positioning ####
+
+At this point you may notice that the x and y arguments for the <code>rect</code> method signify the placement of the top left corner of the rectangle. 
+
+What if we wanted the rectangle to be centered?
+
+One way is to simply reduce the x value by half of the width, and y by half of the height.
+
+In our code it would look like this:
+
+    // Store the width, height, and coordinates of the center we want
+    var w = 100,
+        h = 100,
+        cX = 200,
+        cY = 200;
+
+    // Calculate the new x and y
+    var x = cX - (w/2),
+        y = cY - (h/2);
+
+    // Use them in our rect function
+    p5.rect(x, y, w, h);
+
+(Processing does have a built-in function for changing rectangle placement, but this is a very useful pattern to learn, as it will come up repeatedly.)
+
+
 
 ### Fill and Stroke ###
 
@@ -119,8 +145,8 @@ This behaves exactly like <code>background</code> above, except that we can also
 
 If I wanted a semi-transparent blue fill with an opaque white border I might do something like this:
 
-    p5.fill(200, 20, 20, 100);
-    p5.stroke(255, 255, 255, 127);
+    p5.fill(20, 100, 200, 80);
+    p5.stroke(255, 255, 255, 255);
 
     p5.rect(200, 200, 100, 100);
 
@@ -129,7 +155,20 @@ Each of these methods will set a color for all fills and all strokes that follow
 
 In other words, Processing can only have one magic marker in its hand at one time, but you can switch it out at any point.
 
+Here's an example of drawing two shapes with different colors:
 
+    // First, our square from above
+    p5.fill(20, 100, 200, 80);
+    p5.stroke(255, 255, 255, 255);
+
+    p5.rect(200, 200, 100, 100);
+
+
+    // Now for something different:
+    p5.fill(150, 50, 10, 150);
+    p5.stroke(250, 150, 110, 150);
+
+    p5.rect(250, 250, 100, 100);
 
 
 
