@@ -171,5 +171,43 @@ Here's an example of drawing two shapes with different colors:
     p5.rect(250, 250, 100, 100);
 
 
+---
+
+## Interactivity ##
+
+Now that we've learned how to create static visuals, let's move on to interactivity.
+
+Any commands in <code>draw()</code> will be run once per frame. This is where we want to put any reactive code.
+
+### Mouse Basics ###
+
+Processing gives us some convenient methods to track mouse movements and clicks. Let's try them out.
+
+<code>mouseX</code> and <code>mouseY</code> will give us the current coordinates of the mouse. <code>pMouseX</code> and <code>pMouseY</code> tell use the mouse's previous position. 
+
+This time we'll draw a line. Lines are very simple in Processing. They're created by calling <code>line()</code> and passing in four arguments: x1, y1, x2, y2. 
+
+Therefore, if we wanted to use the mouse to draw:
+
+    p5.draw = function() {
+
+      // change our stroke to white
+      p5.stroke(255, 255, 255, 80);
+
+      // draw a line from the previous location to the current location
+      p5.line(p5.pmouseX, p5.pmouseY, p5.mouseX, p5.mouseY);
+      
+    };
+    
+
+### Storing Variables ###
+
+In creating more complex visuals, we'll need to store information. do this by creating variables. Let's create variables for x and y values that we can use later:
+
+    p5.mouseClicked = function() {
+      self.x = p5.mouseX;
+      self.y = p5.mouseY;
+    };
+
 
 <!-- Mouse position to bg color for map example -->
