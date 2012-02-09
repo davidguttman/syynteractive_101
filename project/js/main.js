@@ -23,6 +23,7 @@ $(document).ready(function() {
 
 // This function will receive the Processing instance created above, and will refer to it internally as 'p5'
 var startProcessing = function(p5) {
+  var self = this;
   
   // This will be called once at the beginning
   p5.setup = function() {
