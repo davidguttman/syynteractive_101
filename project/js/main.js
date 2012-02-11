@@ -1,5 +1,8 @@
 console.log("Welcome to Interactive Visuals 101!");
 
+Number.prototype.mod = function(n) {
+  return ((this%n)+n)%n;
+}
 
 ////////////////
 // PAGE SETUP //
@@ -28,19 +31,10 @@ var startProcessing = function(p5) {
   // This will be called once at the beginning
   p5.setup = function() {
     p5.size(window.innerWidth, window.innerHeight);
-    p5.background(30, 30, 30);
   };
   
   // This will be called every frame
   p5.draw = function() {
-
-    // change our stroke to white
-    p5.stroke(255, 255, 255, 50);
-
-    // draw a line from the previous location to the current location
-    if (self.x) {
-      p5.line(self.x, self.y, p5.mouseX, p5.mouseY);
-    };
   
   };
 
@@ -51,8 +45,15 @@ var startProcessing = function(p5) {
 
   // This will be called every time the mouse is clicked
   p5.mouseClicked = function() {
-    self.x = p5.mouseX;
-    self.y = p5.mouseY;
+    
+  };
+
+  p5.mouseDragged = function() {
+
   };
   
+  p5.mouseReleased = function() {
+
+  };
+
 };
