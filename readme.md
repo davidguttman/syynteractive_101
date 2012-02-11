@@ -205,9 +205,57 @@ Therefore, if we wanted to use the mouse to draw:
 In creating more complex visuals, we'll need to store information. do this by creating variables. Let's create variables for x and y values that we can use later:
 
     p5.mouseClicked = function() {
+      // we can store stuff on 'self' and it will be accessible in other places in the code.
       self.x = p5.mouseX;
       self.y = p5.mouseY;
     };
+
+Whenever we click, this code will store the x and y positions of our mouse into those two variables <code>self.x</code> and <code>self.y</code>.
+
+Let's use those values in draw instead of <code>pmouseX</code> and <code>pmouseY</code> for a more interesting effect:
+
+    if (self.x) {
+      p5.line(self.x, self.y, p5.mouseX, p5.mouseY);
+    };
+
+So you may have noticed that we wrapped our line in a conditional statement. What this means is that we won't try to draw a line if we don't have a value for self.x yet (i.e. we haven't clicked yet).
+
+
+### More Variables and Conditionals ###
+
+What if we wanted to record mouse movements so that we could replay them back?
+
+There will be a couple parts to this:
+
+  * A list to store mouse movements
+  * Keeping track of whether we are in 'recording' or 'playback' mode
+  * drawing stored mouse movements
+
+In JavaScript you can create an empty array (list) like this:
+
+    var myArray = [];
+
+You can then add to it using its <code>push()</code> method:
+
+    myArray.push('a');
+    myArray.push('b');
+    myArray.push('c');
+
+This would be identical to creating an array like this:
+
+    myArray = ['a', 'b', 'c'];
+
+Then you can access its data with square brackets and an index:
+
+    myArray[0] === 'a';
+    myArray[1] === 'b';
+    myArray[2] === 'c';
+
+
+
+    
+
+
 
 
 <!-- Mouse position to bg color for map example -->
