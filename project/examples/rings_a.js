@@ -40,10 +40,12 @@ var startProcessing = function(p5) {
   p5.draw = function() {
     p5.background(30);
 
+    // create a function that will take a ring and call "draw()" on it
     var drawRing = function(ring) {
       ring.draw();
     };
 
+    // iterate over all rings, using that function
     _.each(self.rings, drawRing);
 
   };
@@ -55,6 +57,8 @@ var startProcessing = function(p5) {
 
   // This will be called every time the mouse is clicked
   p5.mouseClicked = function() {
+
+    // create a new ring object, passing it the current mouse position
     ring = new Ring(p5, {
       x: p5.mouseX,
       y: p5.mouseY
@@ -78,19 +82,24 @@ var Ring = function(p5, options) {
   var self = this;
 
   var setup = function() {
+    // store a copy of the x and y that were passed in
     self.x = options.x;
     self.y = options.y;
 
+    // start with a radius of 0
     self.r = 0;
   };
 
   self.draw = function() {
+    // increase the radius by 1 each frame
     self.r += 1;
 
+    // set the stroke and fill
     p5.stroke(255);
     p5.strokeWeight(2);
     p5.noFill();
 
+    // draw the circle using stored x, y, and r
     p5.ellipse(self.x, self.y, self.r, self.r);
   };
 

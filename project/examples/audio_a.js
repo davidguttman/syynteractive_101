@@ -55,8 +55,10 @@ var startProcessing = function(p5) {
     p5.stroke(255);
     p5.fill(255);
 
+    // set the width of each "bar"
     var w = p5.width/3;
 
+    // draw each bar using stored frequencies
     p5.rect(0*w, p5.height, w, -p5.height * self.lowFreq);
     p5.rect(1*w, p5.height, w, -p5.height * self.midFreq);
     p5.rect(2*w, p5.height, w, -p5.height * self.highFreq);

@@ -49,8 +49,10 @@ var startProcessing = function(p5) {
   };
 
   p5.mouseDragged = function() {
+    // Set the stroke to semi-transparent white
     p5.stroke(255, 255, 255, 30);
 
+    // Draw a line from the center of the canvas to the mouse's position
     p5.line(p5.width/2, p5.height/2, p5.mouseX, p5.mouseY);
   };
   
