@@ -118,8 +118,7 @@ var Ring = function(p5, options) {
       self.active = false;
     };
 
-    p5.rect(self.x, self.y, self.r, self.r);
-
+    p5.ellipse(self.x, self.y, self.r, self.r);
     
   };
 

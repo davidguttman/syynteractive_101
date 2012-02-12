@@ -31,28 +31,17 @@ var startProcessing = function(p5) {
   // This will be called once at the beginning
   p5.setup = function() {
     p5.size(window.innerWidth, window.innerHeight);
-    p5.background(30);
-
-    self.rings = []
-
   };
   
   p5.draw = function() {
-    p5.background(30);
+    var xRatio = p5.mouseX / p5.width;
+    var yRatio = p5.mouseY / p5.height;
 
-    var activeRings = [];
+    var r = xRatio * 255;
+    var g = yRatio * 255;
+    var b = 127;
 
-    var drawRing = function(ring) {
-      ring.draw();
-      if (ring.active == true) {
-        activeRings.push(ring);
-      };
-    };
-
-    _.each(self.rings, drawRing);
-
-    self.rings = activeRings;
-
+    p5.background(r, g, b);
   };
 
   // This will be called every time the mouse moves
@@ -62,7 +51,7 @@ var startProcessing = function(p5) {
 
   // This will be called every time the mouse is clicked
   p5.mouseClicked = function() {
-    self.createRingGenerator(p5.mouseX, p5.mouseY);
+    
   };
 
   p5.mouseDragged = function() {
@@ -73,55 +62,4 @@ var startProcessing = function(p5) {
 
   };
 
-  self.createRingGenerator = function(x, y) {
-    
-    var createRing = function() {
-      
-      var ring = new Ring(p5, {
-        x: x,
-        y: y
-      });
-
-      self.rings.push(ring);
-    };
-
-    createRing();
-    setInterval(createRing, 2000);
-  };
-
-};
-
-
-var Ring = function(p5, options) {
-  var self = this;
-
-  var setup = function() {
-    self.x = options.x;
-    self.y = options.y;
-
-    self.active = true;
-
-    self.r = 0;
-
-    self.maxR = 2*Math.sqrt(Math.pow(p5.width, 2) + Math.pow(p5.height, 2));
-  };
-
-  self.draw = function() {
-    self.r += 1;
-
-    p5.stroke(255);
-    p5.strokeWeight(1);
-    p5.noFill();
-
-
-    if (self.r > self.maxR) {
-      self.active = false;
-    };
-
-    p5.rect(self.x, self.y, self.r, self.r);
-
-    
-  };
-
-  setup();
 };

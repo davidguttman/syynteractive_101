@@ -40,18 +40,11 @@ var startProcessing = function(p5) {
   p5.draw = function() {
     p5.background(30);
 
-    var activeRings = [];
-
     var drawRing = function(ring) {
       ring.draw();
-      if (ring.active == true) {
-        activeRings.push(ring);
-      };
     };
 
     _.each(self.rings, drawRing);
-
-    self.rings = activeRings;
 
   };
 
@@ -86,7 +79,7 @@ var startProcessing = function(p5) {
     };
 
     createRing();
-    setInterval(createRing, 2000);
+    setInterval(createRing, 1000);
   };
 
 };
@@ -99,11 +92,7 @@ var Ring = function(p5, options) {
     self.x = options.x;
     self.y = options.y;
 
-    self.active = true;
-
     self.r = 0;
-
-    self.maxR = 2*Math.sqrt(Math.pow(p5.width, 2) + Math.pow(p5.height, 2));
   };
 
   self.draw = function() {
@@ -113,13 +102,9 @@ var Ring = function(p5, options) {
     p5.strokeWeight(1);
     p5.noFill();
 
-
-    if (self.r > self.maxR) {
-      self.active = false;
+    if (self.r < 2*p5.width || self.r < 2*p5.height) {
+      p5.ellipse(self.x, self.y, self.r, self.r);
     };
-
-    p5.rect(self.x, self.y, self.r, self.r);
-
     
   };
 

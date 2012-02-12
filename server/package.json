@@ -1,0 +1,9 @@
+{
+  "name": "simple_server",
+  "version": "0.0.1",
+  "private": true,
+  "main": "./server.coffee",
+  "dependencies": {
+    "express": ">=0"
+  }
+}
