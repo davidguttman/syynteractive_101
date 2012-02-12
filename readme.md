@@ -231,7 +231,12 @@ Therefore, if we wanted to use the mouse to draw:
       p5.line(p5.pmouseX, p5.pmouseY, p5.mouseX, p5.mouseY);
       
     };
-    
+
+---
+
+### Example: Color Mapping ###
+
+---    
 
 ### Storing Variables ###
 
@@ -284,10 +289,21 @@ Then you can access its data with square brackets and an index:
     myArray[1] === 'b';
     myArray[2] === 'c';
 
+---
 
+### Example: Echo ###
 
-    
+---
 
+### Example: Rings ###
+
+---
+
+### Example: Audio ###
+
+---
+
+### Example: Twitter ###
 
 
 
