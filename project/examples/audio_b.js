@@ -48,18 +48,48 @@ var startProcessing = function(p5) {
   };
   
   p5.draw = function() {
-    self.updateAudio();
+    self.updateAudio(0.8);
 
-    p5.background(30);
+    p5.fill(30, 100);
+    p5.noStroke();
+    p5.rect(0,0,p5.width, p5.height);
 
-    p5.stroke(255);
-    p5.fill(255);
+    var w = (p5.width/3)/2,
+        h1 = (p5.height * self.lowFreq)/2,
+        h2 = (p5.height * self.midFreq)/2,
+        h3 = (p5.height * self.highFreq)/2;
 
-    var w = p5.width/3;
+    var q1x = 0,
+        q2x = p5.width/2,
+        q3x = 0,
+        q4x = p5.width/2;
 
-    p5.rect(0*w, p5.height, w, -p5.height * self.lowFreq);
-    p5.rect(1*w, p5.height, w, -p5.height * self.midFreq);
-    p5.rect(2*w, p5.height, w, -p5.height * self.highFreq);
+    var y = p5.height/2;
+
+    p5.noStroke();
+
+    var r = self.lowFreq*255,
+        g = self.midFreq*255,
+        b = self.highFreq*255;
+
+    p5.fill(r, g, b);
+        
+    p5.rect(q1x + 0*w, y, w, -h3);
+    p5.rect(q1x + 1*w, y, w, -h2);
+    p5.rect(q1x + 2*w, y, w, -h1);
+
+    p5.rect(q2x + 0*w, y, w, -h1);
+    p5.rect(q2x + 1*w, y, w, -h2);
+    p5.rect(q2x + 2*w, y, w, -h3);
+
+    p5.rect(q3x + 0*w, y, w, h3);
+    p5.rect(q3x + 1*w, y, w, h2);
+    p5.rect(q3x + 2*w, y, w, h1);
+
+    p5.rect(q4x + 0*w, y, w, h1);
+    p5.rect(q4x + 1*w, y, w, h2);
+    p5.rect(q4x + 2*w, y, w, h3);
+    
 
   };
 
@@ -81,8 +111,8 @@ var startProcessing = function(p5) {
 
   };
 
-  self.updateAudio = function() {
-    self.audio.updateAudio(0.0);
+  self.updateAudio = function(smoothing) {
+    self.audio.updateAudio(smoothing);
     self.allFreqs = self.audio.freqByteData;
 
     var nFreqs = self.allFreqs.length,
