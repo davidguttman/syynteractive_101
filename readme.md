@@ -15,7 +15,8 @@ This page can be found at:  <https://github.com/davidguttman/syynteractive_101/b
 
 ## Intro ##
 
-![JavaScript](http://imgs.xkcd.com/comics/mac_pc.png)
+<center>![JavaScript](http://imgs.xkcd.com/comics/mac_pc.png)</center>
+
 
 ### Me ###
 
@@ -23,10 +24,13 @@ This page can be found at:  <https://github.com/davidguttman/syynteractive_101/b
 * Wave Pendulum <http://cold-sky-301.heroku.com/>
 * BPA <http://davidguttman.com/bpa>
 * Stalagmites <http://vimeo.com/2435163>
+* Winter Trees <http://wintertrees.heroku.com/>
+* Tectonic <http://tectonic.herokuapp.com/>
 
 
 ### Cool Things ###
 
+* ROME <http://www.ro.me/>
 * WebGL Audio Visualizer <http://airtightinteractive.com/demos/js/reactive/>
 * An interactive string instrument based on the NY Subway <http://mta.me/>
 * Interactive Music Experience <http://lights.elliegoulding.com/>
@@ -34,8 +38,13 @@ This page can be found at:  <https://github.com/davidguttman/syynteractive_101/b
 
 ### Resources ###
 
+* <http://processingjs.org/reference/>
 * <https://developer.mozilla.org/en/JavaScript/A_re-introduction_to_JavaScript>
 * <http://dry.ly/>
+
+### Other Cool Things ###
+
+* <http://nodejs.org/>
 
 ## Getting up and running
 
