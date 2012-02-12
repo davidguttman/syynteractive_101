@@ -6,6 +6,8 @@
     function Audiolyzer(url) {
       this.url = url;
       this.is_playing = false;
+      this.freqByteData = [];
+      this.timeByteData = [];
       this.audioContext = new window.webkitAudioContext();
       this.loadAudio(this.url);
     }
@@ -13,7 +15,6 @@
     Audiolyzer.prototype.loadAudio = function(url) {
       this.source = this.audioContext.createBufferSource();
       this.analyser = this.audioContext.createAnalyser();
-      this.analyser.fftSize = 256;
       this.source.connect(this.analyser);
       this.analyser.connect(this.audioContext.destination);
       return this.loadAudioBuffer(url);
@@ -34,7 +35,6 @@
 
     Audiolyzer.prototype.finishLoad = function() {
       this.source.buffer = this.audioBuffer;
-      this.source.looping = true;
       this.source.noteOn(0.0);
       this.freqByteData = new Uint8Array(this.analyser.frequencyBinCount);
       this.timeByteData = new Uint8Array(this.analyser.frequencyBinCount);
