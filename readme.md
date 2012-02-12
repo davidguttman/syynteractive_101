@@ -1,9 +1,10 @@
-This page can be found at:  [https://github.com/davidguttman/syynteractive_101/blob/master/readme.md](https://github.com/davidguttman/syynteractive_101/blob/master/readme.md)
+This page can be found at:  <https://github.com/davidguttman/syynteractive_101/blob/master/readme.md>
 
 ---
 
 # Interactive Visuals 101
 
+* Intro
 * Getting up and running
 * Drawing to the Canvas
 * Mouse and Keyboard Interactivity
@@ -12,10 +13,33 @@ This page can be found at:  [https://github.com/davidguttman/syynteractive_101/b
 * Helpful patterns
 * Hosting and Serving
 
+## Intro ##
+
+![JavaScript](http://imgs.xkcd.com/comics/mac_pc.png)
+
+### Me ###
+
+* TwitterChimes <http://vimeo.com/21462025>
+* Wave Pendulum <http://cold-sky-301.heroku.com/>
+* BPA <http://davidguttman.com/bpa>
+* Stalagmites <http://vimeo.com/2435163>
+
+
+### Cool Things ###
+
+* WebGL Audio Visualizer <http://airtightinteractive.com/demos/js/reactive/>
+* An interactive string instrument based on the NY Subway <http://mta.me/>
+* Interactive Music Experience <http://lights.elliegoulding.com/>
+
+
+### Resources ###
+
+* <https://developer.mozilla.org/en/JavaScript/A_re-introduction_to_JavaScript>
+* <http://dry.ly/>
 
 ## Getting up and running
 
-1.  Download the project directory: [https://github.com/davidguttman/syynteractive_101/zipball/master](https://github.com/davidguttman/syynteractive_101/zipball/master)
+1.  Download the project directory: <https://github.com/davidguttman/syynteractive_101/zipball/master>
 
 2.  Extract it someplace convenient
 

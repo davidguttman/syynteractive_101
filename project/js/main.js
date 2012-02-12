@@ -44,40 +44,52 @@ var startProcessing = function(p5) {
     p5.size(window.innerWidth, window.innerHeight);
     p5.background(30);
 
-    var font = p5.loadFont("helvetica");
-    p5.textFont(font);
-    p5.textSize(14);
-
-    self.tweetData = [];
-
-    self.tweets = [];
-
-    self.searchTwitter();
-
+    self.audio = new Audiolyzer('audio/pretty_lights-we_must_go_on.mp3');
   };
   
   p5.draw = function() {
-    p5.background(30);
-    if (self.tweetData.length > 0) {
+    self.updateAudio(0.8);
 
-      if (p5.frameCount % 60 === 0) {
-        var tweet = new Tweet(p5, self.tweetData.shift());
-        self.tweets.push(tweet);
-      };
-      
-    };
+    p5.fill(30, 100);
+    p5.noStroke();
+    p5.rect(0,0,p5.width, p5.height);
+
+    var w = (p5.width/3)/2,
+        h1 = (p5.height * self.lowFreq)/2,
+        h2 = (p5.height * self.midFreq)/2,
+        h3 = (p5.height * self.highFreq)/2;
+
+    var q1x = 0,
+        q2x = p5.width/2,
+        q3x = 0,
+        q4x = p5.width/2;
+
+    var y = p5.height/2;
+
+    p5.noStroke();
+
+    var r = self.lowFreq*255,
+        g = self.midFreq*255,
+        b = self.highFreq*255;
+
+    p5.fill(r, g, b);
+        
+    p5.rect(q1x + 0*w, y, w, -h3);
+    p5.rect(q1x + 1*w, y, w, -h2);
+    p5.rect(q1x + 2*w, y, w, -h1);
+
+    p5.rect(q2x + 0*w, y, w, -h1);
+    p5.rect(q2x + 1*w, y, w, -h2);
+    p5.rect(q2x + 2*w, y, w, -h3);
+
+    p5.rect(q3x + 0*w, y, w, h3);
+    p5.rect(q3x + 1*w, y, w, h2);
+    p5.rect(q3x + 2*w, y, w, h1);
+
+    p5.rect(q4x + 0*w, y, w, h1);
+    p5.rect(q4x + 1*w, y, w, h2);
+    p5.rect(q4x + 2*w, y, w, h3);
     
-    var activeTweets = [];
-
-    _.each(self.tweets, function(tweet) {
-      if (tweet.active) {
-        tweet.draw();
-        activeTweets.push(tweet);
-      };
-      
-    });
-
-    self.tweets = activeTweets;
 
   };
 
@@ -99,79 +111,54 @@ var startProcessing = function(p5) {
 
   };
 
+  self.updateAudio = function(smoothing) {
+    self.audio.updateAudio(smoothing);
+    self.allFreqs = self.audio.freqByteData;
 
-  self.searchTwitter = function(url) {
-    var baseUrl = "http://search.twitter.com/search.json";
-    if (url) {
-      url = baseUrl + url;
-    } else {
-      var url = baseUrl;
-      url += "?q=lang%3Aen%20%3A)";
-      url += "&include_entities=true";
-    };
+    var nFreqs = self.allFreqs.length,
+        lowFreqs = [],
+        midFreqs = [],
+        highFreqs = [];
 
-    url += "&rpp=100";
-    url += "&result_type=recent";
-    url += "&callback=?";
-
-    console.log('hitting url: ', url);
-
-    $.getJSON(url, function(data) {
-      console.log(data);
-      console.log(data.results.length);
-
-      _.each(data.results, function(tweet) {
-        if (self.tweetData.length < 200) {
-          self.tweetData.push(tweet);  
-        };
-        
-      });
-
-      setTimeout(self.searchTwitter, 20000, data.refresh_url);
+    _.each(self.allFreqs, function(freq, i) {
+      if (i < nFreqs/3) {
+        lowFreqs.push(freq);
+      } else if (i > 2*nFreqs/3) {
+        highFreqs.push(freq);
+      } else {
+        midFreqs.push(freq);
+      };
     });
 
+    self.lowMean = lowFreqs.mean();
+    self.midMean = midFreqs.mean();
+    self.highMean = highFreqs.mean();
+
+    // set low max/min
+    self.lowMax = self.lowMax || self.lowMean;
+    self.lowMin = self.lowMin || self.lowMean;
+
+    if (self.lowMean > self.lowMax) self.lowMax = self.lowMean;
+    if (self.lowMean < self.lowMin) self.lowMin = self.lowMean;
+
+    // set mid max/min
+    self.midMax = self.midMax || self.midMean;
+    self.midMin = self.midMin || self.midMean;
+
+    if (self.midMean > self.midMax) self.midMax = self.midMean;
+    if (self.midMean < self.midMin) self.midMin = self.midMean;
+
+    // set high max/min
+    self.highMax = self.highMax || self.highMean;
+    self.highMin = self.highMin || self.highMean;
+
+    if (self.highMean > self.highMax) self.highMax = self.highMean;
+    if (self.highMean < self.highMin) self.highMin = self.highMean;
 
 
+    self.lowFreq = p5.norm(self.lowMean, self.lowMin, self.lowMax);
+    self.midFreq = p5.norm(self.midMean, self.midMin, self.midMax);
+    self.highFreq = p5.norm(self.highMean, self.highMin, self.highMax);
   };
-  
-};
-
-var Tweet = function(p5, tweet) {
-  
-  var self = this;
-
-  self.setup = function() {
-    self.w = 300;
-    self.h = 300;
-
-    self.x = Math.random() * (p5.width - self.w);
-    self.y = -50;
-
-    self.vel = 0;
-    self.accel = 0.02;
-
-    self.text = tweet.text;
-
-    self.active = true;
-
-  };
-
-  self.draw = function() {
-    self.vel += self.accel;
-
-    self.y += self.vel;
-
-    p5.stroke(255);
-    p5.fill(255);
-
-    p5.text(self.text, self.x, self.y, self.w, self.h);
-
-    if (self.y > p5.height) {
-      self.active = false;
-    };
-
-  };
-
-  self.setup();
 
 };
