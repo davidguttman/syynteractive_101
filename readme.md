@@ -15,7 +15,7 @@ This page can be found at:  <https://github.com/davidguttman/syynteractive_101/b
 
 ## Intro ##
 
-<center>![JavaScript](http://imgs.xkcd.com/comics/mac_pc.png)</center>
+![JavaScript](http://imgs.xkcd.com/comics/mac_pc.png)
 
 
 ### Me ###
@@ -26,6 +26,7 @@ This page can be found at:  <https://github.com/davidguttman/syynteractive_101/b
 * Stalagmites <http://vimeo.com/2435163>
 * Winter Trees <http://wintertrees.heroku.com/>
 * Tectonic <http://tectonic.herokuapp.com/>
+* Hollywood <http://hollywood.herokuapp.com/>
 
 
 ### Cool Things ###
@@ -305,6 +306,9 @@ Then you can access its data with square brackets and an index:
 
 ### Example: Twitter ###
 
+---
+
+### Example: Perlin Noise ###
 
 
 <!-- Mouse position to bg color for map example -->
