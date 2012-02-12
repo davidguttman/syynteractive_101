@@ -4,6 +4,17 @@ Number.prototype.mod = function(n) {
   return ((this%n)+n)%n;
 }
 
+Array.prototype.sum = function() {
+  var sum = _.reduce(this, function(memo, num) {
+    return memo + num;
+  }, 0);
+  return sum;
+};
+
+Array.prototype.mean = function() {
+  return (this.sum()/this.length);
+};
+
 ////////////////
 // PAGE SETUP //
 ////////////////
@@ -33,25 +44,23 @@ var startProcessing = function(p5) {
     p5.size(window.innerWidth, window.innerHeight);
     p5.background(30);
 
-    self.rings = []
-
+    var trackN = Math.ceil(Math.random()*5);
+    self.audio = new Audiolyzer('audio/'+ 8 +'.mp3');
   };
   
   p5.draw = function() {
+    self.updateAudio();
+
     p5.background(30);
 
-    var activeRings = [];
+    p5.stroke(255);
+    p5.fill(255);
 
-    var drawRing = function(ring) {
-      ring.draw();
-      if (ring.active == true) {
-        activeRings.push(ring);
-      };
-    };
+    var w = p5.width/3;
 
-    _.each(self.rings, drawRing);
-
-    self.rings = activeRings;
+    p5.rect(0*w, p5.height, w, -p5.height * self.lowFreq);
+    p5.rect(1*w, p5.height, w, -p5.height * self.midFreq);
+    p5.rect(2*w, p5.height, w, -p5.height * self.highFreq);
 
   };
 
@@ -62,7 +71,7 @@ var startProcessing = function(p5) {
 
   // This will be called every time the mouse is clicked
   p5.mouseClicked = function() {
-    self.createRingGenerator(p5.mouseX, p5.mouseY);
+    
   };
 
   p5.mouseDragged = function() {
@@ -73,55 +82,54 @@ var startProcessing = function(p5) {
 
   };
 
-  self.createRingGenerator = function(x, y) {
-    
-    var createRing = function() {
-      
-      var ring = new Ring(p5, {
-        x: x,
-        y: y
-      });
+  self.updateAudio = function() {
+    self.audio.updateAudio(0.0);
+    self.allFreqs = self.audio.freqByteData;
 
-      self.rings.push(ring);
-    };
+    var nFreqs = self.allFreqs.length,
+        lowFreqs = [],
+        midFreqs = [],
+        highFreqs = [];
 
-    createRing();
-    setInterval(createRing, 2000);
+    _.each(self.allFreqs, function(freq, i) {
+      if (i < nFreqs/3) {
+        lowFreqs.push(freq);
+      } else if (i > 2*nFreqs/3) {
+        highFreqs.push(freq);
+      } else {
+        midFreqs.push(freq);
+      };
+    });
+
+    self.lowMean = lowFreqs.mean();
+    self.midMean = midFreqs.mean();
+    self.highMean = highFreqs.mean();
+
+    // set low max/min
+    self.lowMax = self.lowMax || self.lowMean;
+    self.lowMin = self.lowMin || self.lowMean;
+
+    if (self.lowMean > self.lowMax) self.lowMax = self.lowMean;
+    if (self.lowMean < self.lowMin) self.lowMin = self.lowMean;
+
+    // set mid max/min
+    self.midMax = self.midMax || self.midMean;
+    self.midMin = self.midMin || self.midMean;
+
+    if (self.midMean > self.midMax) self.midMax = self.midMean;
+    if (self.midMean < self.midMin) self.midMin = self.midMean;
+
+    // set high max/min
+    self.highMax = self.highMax || self.highMean;
+    self.highMin = self.highMin || self.highMean;
+
+    if (self.highMean > self.highMax) self.highMax = self.highMean;
+    if (self.highMean < self.highMin) self.highMin = self.highMean;
+
+
+    self.lowFreq = p5.norm(self.lowMean, self.lowMin, self.lowMax);
+    self.midFreq = p5.norm(self.midMean, self.midMin, self.midMax);
+    self.highFreq = p5.norm(self.highMean, self.highMin, self.highMax);
   };
 
-};
-
-
-var Ring = function(p5, options) {
-  var self = this;
-
-  var setup = function() {
-    self.x = options.x;
-    self.y = options.y;
-
-    self.active = true;
-
-    self.r = 0;
-
-    self.maxR = 2*Math.sqrt(Math.pow(p5.width, 2) + Math.pow(p5.height, 2));
-  };
-
-  self.draw = function() {
-    self.r += 1;
-
-    p5.stroke(255);
-    p5.strokeWeight(1);
-    p5.noFill();
-
-
-    if (self.r > self.maxR) {
-      self.active = false;
-    };
-
-    p5.rect(self.x, self.y, self.r, self.r);
-
-    
-  };
-
-  setup();
 };
